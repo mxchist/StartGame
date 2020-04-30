@@ -17,7 +17,7 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
-        img = new Texture("badlogic.jpg");
+        img = new Texture("peka.jpg");
         backgroundFox = new Texture("background_fox.jpg");
         region = new TextureRegion(backgroundFox);
         pos = new Vector2();
