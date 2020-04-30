@@ -12,6 +12,7 @@ public class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(this);
         batch = new SpriteBatch();
     }
 

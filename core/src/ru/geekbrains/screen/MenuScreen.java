@@ -1,7 +1,7 @@
 package ru.geekbrains.screen;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
@@ -13,6 +13,7 @@ public class MenuScreen extends BaseScreen {
     private Vector2 pos;
     private Vector2 motion;
     private Vector2 touch;
+    private Vector2 correction;
 
     @Override
     public void show() {
@@ -22,6 +23,8 @@ public class MenuScreen extends BaseScreen {
         region = new TextureRegion(backgroundFox);
         pos = new Vector2();
         motion = new Vector2(0.9f,0.9f);
+        touch = new Vector2();
+        correction = new Vector2();
     }
 
     @Override
@@ -40,5 +43,13 @@ public class MenuScreen extends BaseScreen {
         super.dispose();
     }
 
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        touch.set(screenX, Gdx.graphics.getHeight() - screenY);
+        correction = touch.cpy().sub(pos);
+        System.out.println("touchDown touch.x = " + touch.x + " touch.y = " + touch.y);
+        pos.set(touch);
+        return super.touchDown(screenX, screenY, pointer, button);
+    }
 
 }
