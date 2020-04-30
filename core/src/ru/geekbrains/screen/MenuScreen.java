@@ -14,8 +14,6 @@ public class MenuScreen extends BaseScreen {
     private Vector2 motion;
     private Vector2 touch;
 
-    protected SpriteBatch batch;
-
     @Override
     public void show() {
         super.show();
