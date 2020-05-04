@@ -16,6 +16,7 @@ public class MenuScreen extends BaseScreen {
     private Vector2 correction;
     private Vector2 positionBegin;
     final private float KOEFF = 0.07f;
+    final private float STEP = 0.05f;
 
     @Override
     public void show() {
@@ -34,12 +35,13 @@ public class MenuScreen extends BaseScreen {
         if (this.correction.len() != 0) {
             img = new Texture("peka_scholar.jpg");
             super.render(delta);
-            this.correction = touch.cpy().sub(this.positionBegin);
+            this.correction.set(touch);
+            correction.sub(this.positionBegin);
             float lenBefore = this.correction.len();
             this.correction.scl(KOEFF);
-            if (correction.len() < 0.05) {
-                this.pos = touch;
-                this.correction = new Vector2(0,0);
+            if (correction.len() < STEP) {
+                this.pos.set(touch);
+                this.correction.set(0,0);
             }
             if (correction.len() == 0)
                 img = new Texture("peka.jpg");
@@ -66,7 +68,8 @@ public class MenuScreen extends BaseScreen {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         this.touch.set(screenX, Gdx.graphics.getHeight() - screenY);
         this.positionBegin = new Vector2(this.pos);
-        this.correction = touch.cpy().sub(this.positionBegin);
+        this.correction.set(touch);
+        correction.sub(this.positionBegin);
         System.out.println("touchDown touch.x = " + touch.x + " touch.y = " + touch.y);
         return super.touchDown(screenX, screenY, pointer, button);
     }
