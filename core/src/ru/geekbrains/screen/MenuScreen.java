@@ -15,7 +15,7 @@ public class MenuScreen extends BaseScreen {
     private Vector2 touch;
     private Vector2 correction;
     private Vector2 positionBegin;
-    private int koeff;
+    final private float KOEFF = 0.07f;
 
     @Override
     public void show() {
@@ -27,24 +27,28 @@ public class MenuScreen extends BaseScreen {
         motion = new Vector2();
         touch = new Vector2();
         correction = new Vector2(0,0);
-        koeff = 1;
     }
 
     @Override
     public void render(float delta) {
-        if (correction.len() != 0)
+        if (this.correction.len() != 0) {
             img = new Texture("peka_scholar.jpg");
-        if (touch.x != pos.x & touch.y != pos.y) {
             super.render(delta);
             this.correction = touch.cpy().sub(this.positionBegin);
             float lenBefore = this.correction.len();
-            if (correction.len() < 0.05)
+            this.correction.scl(KOEFF);
+            if (correction.len() < 0.05) {
+                this.pos = touch;
+                this.correction = new Vector2(0,0);
+            }
+            if (correction.len() == 0)
                 img = new Texture("peka.jpg");
-            this.motion.set(correction.scl(0.05f));
-            pos.add(motion);
-
-            if (touch.cpy().sub(this.pos).len() > lenBefore)
-                positionBegin = pos;
+           else {
+               this.motion.set(correction);
+                pos.add(motion);
+                if (touch.cpy().sub(this.pos).len() > lenBefore)
+                    positionBegin = pos;
+            }
         }
         batch.begin();
         batch.draw(region, 0, 0);
