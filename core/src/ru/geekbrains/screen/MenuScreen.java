@@ -10,13 +10,12 @@ import ru.geekbrains.base.BaseScreen;
 public class MenuScreen extends BaseScreen {
     Texture img, backgroundFox;
     TextureRegion region;
-    private Vector2 pos;
-    private Vector2 motion;
+    private Vector2 pos;                    // текущее положнеие
     private Vector2 touch;
-    private Vector2 correction;
-    private Vector2 positionBegin;
-    final private float KOEFF = 0.07f;
-    final private float STEP = 0.05f;
+    private Vector2 correction;             // временный объект для определния величины корректировки направления
+    private Vector2 positionBegin;          // положение картинки в момент касания. Необходимо для визуального эффекта - программа сначала "промахивается" мимо точки назначения, а потом пододвигает картунку на нужное место.
+    final private float MOTION = 0.04f;     // коэффициент скорости
+    final private float STEP = 0.05f;       // уставка - минимальное расстояние между кликом и текущим положением, когда они считаются ещё не одинаковы и фигура не дошла до финальной точки
 
     @Override
     public void show() {
@@ -25,7 +24,6 @@ public class MenuScreen extends BaseScreen {
         backgroundFox = new Texture("background_fox.jpg");
         region = new TextureRegion(backgroundFox);
         pos = new Vector2();
-        motion = new Vector2();
         touch = new Vector2();
         correction = new Vector2(0,0);
     }
@@ -33,23 +31,22 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         if (this.correction.len() != 0) {
-            img = new Texture("peka_scholar.jpg");
             super.render(delta);
-            this.correction.set(touch);
-            correction.sub(this.positionBegin);
             float lenBefore = this.correction.len();
-            this.correction.scl(KOEFF);
+            this.correction.scl(MOTION);
             if (correction.len() < STEP) {
                 this.pos.set(touch);
                 this.correction.set(0,0);
-            }
-            if (correction.len() == 0)
                 img = new Texture("peka.jpg");
+            }
            else {
-               this.motion.set(correction);
-                pos.add(motion);
-                if (touch.cpy().sub(this.pos).len() > lenBefore)
+                pos.add(correction);
+                this.correction.set(touch);
+                if (correction.sub(this.pos).len() > lenBefore) {
                     positionBegin = pos;
+                }
+                this.correction.set(touch);
+                correction.sub(this.positionBegin);
             }
         }
         batch.begin();
@@ -68,6 +65,7 @@ public class MenuScreen extends BaseScreen {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         this.touch.set(screenX, Gdx.graphics.getHeight() - screenY);
         this.positionBegin = new Vector2(this.pos);
+        img = new Texture("peka_scholar.jpg");
         this.correction.set(touch);
         correction.sub(this.positionBegin);
         System.out.println("touchDown touch.x = " + touch.x + " touch.y = " + touch.y);
