@@ -6,9 +6,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.base.BaseScreen;
+import ru.geekbrains.sprite.Background;
 
 public class MenuScreen extends BaseScreen {
     Texture img, backgroundFox;
+    public Background background;
     TextureRegion region;
     private Vector2 pos;                    // текущее положнеие
     private Vector2 touch;
@@ -22,6 +24,7 @@ public class MenuScreen extends BaseScreen {
         super.show();
         img = new Texture("peka.jpg");
         backgroundFox = new Texture("background_fox.jpg");
+        background = new Background(backgroundFox);
         region = new TextureRegion(backgroundFox);
         pos = new Vector2();
         touch = new Vector2();
