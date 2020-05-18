@@ -19,7 +19,7 @@ public class Logo extends Sprite {
     public Logo (Texture region) {
         super(new TextureRegion(region));
         touch = new Vector2();
-        correction = new Vector2(0,0);
+        correction = new Vector2();
         common = new Vector2();
     }
 
@@ -58,6 +58,6 @@ public class Logo extends Sprite {
 
     @Override
     public void resize(Rect worldBounds) {
-        setHeightProportion(0.3f);
+        setHeightProportion(0.1f);
     }
 }
