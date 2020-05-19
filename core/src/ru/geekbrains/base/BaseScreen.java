@@ -15,10 +15,15 @@ import ru.geekbrains.math.Rect;
 public class BaseScreen implements Screen, InputProcessor {
 
     protected SpriteBatch batch;
-    public Rect screenBounds, worldBounds, glBounds;
-    public Matrix4 worldToGl;
-    public Matrix3 screenToWorld;
-    public Vector2 touch;
+
+    private Rect screenBounds;
+    private Rect worldBounds;
+    private Rect glBounds;
+
+    private Matrix4 worldToGl;
+    private Matrix3 screenToWorld;
+
+    private Vector2 touch;
 
     @Override
     public void show() {
@@ -34,7 +39,7 @@ public class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0.3f, 0.2f, 0.1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
@@ -59,12 +64,10 @@ public class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
@@ -73,7 +76,7 @@ public class BaseScreen implements Screen, InputProcessor {
     }
 
     @Override
-    public void dispose () {
+    public void dispose() {
         batch.dispose();
     }
 
@@ -106,11 +109,25 @@ public class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        touch.set(screenX, screenBounds.getHeight() - screenY).mul(screenToWorld);
+        touchUp(touch, pointer, button);
+        return false;
+    }
+
+    public boolean touchUp(Vector2 touch, int pointer, int button) {
+        System.out.println("touchUp touch.x = " + touch.x + " touch.y = " + touch.y);
         return false;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        touch.set(screenX, screenBounds.getHeight() - screenY).mul(screenToWorld);
+        touchDragged(touch, pointer);
+        return false;
+    }
+
+    public boolean touchDragged(Vector2 touch, int pointer) {
+        System.out.println("touchDragged touch.x = " + touch.x + " touch.y = " + touch.y);
         return false;
     }
 
@@ -123,5 +140,4 @@ public class BaseScreen implements Screen, InputProcessor {
     public boolean scrolled(int amount) {
         return false;
     }
-
 }
