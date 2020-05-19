@@ -14,6 +14,7 @@ public class GameScreen extends BaseScreen {
 
     private Texture bg;
     private Background background;
+    private TextureAtlas atlas;
     private Star[] stars;
 
     @Override
@@ -38,11 +39,15 @@ public class GameScreen extends BaseScreen {
     @Override
     public void resize(Rect worldBounds) {
         background.resize(worldBounds);
+        for (Star star : stars) {
+            star.resize(worldBounds);
+        }
     }
 
     @Override
     public void dispose() {
         bg.dispose();
+        atlas.dispose();
         super.dispose();
     }
 
@@ -67,12 +72,17 @@ public class GameScreen extends BaseScreen {
     }
 
     private void update(float delta) {
-
+        for (Star star : stars) {
+            star.update(delta);
+        }
     }
 
     private void draw() {
         batch.begin();
         background.draw(batch);
+        for (Star star : stars) {
+            star.draw(batch);
+        }
         batch.end();
     }
 }
