@@ -9,13 +9,15 @@ import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.sprite.Background;
 import ru.geekbrains.sprite.Star;
+import ru.geekbrains.sprite.BattleShip;
 
 public class GameScreen extends BaseScreen {
 
     private Texture bg;
     private Background background;
-    private TextureAtlas atlas;
+    private TextureAtlas atlas, mainAtlas;
     private Star[] stars;
+    private BattleShip battleShip;
 
     @Override
     public void show() {
@@ -23,10 +25,12 @@ public class GameScreen extends BaseScreen {
         bg = new Texture("textures/bg.png");
         background = new Background(bg);
         atlas = new TextureAtlas(Gdx.files.internal("textures/menuAtlas.tpack"));
+        mainAtlas = new TextureAtlas(Gdx.files.internal("textures/mainAtlas.tpack"));
         stars = new Star[64];
         for (int i = 0; i < stars.length; i++) {
             stars[i] = new Star(atlas);
         }
+        battleShip = new BattleShip(mainAtlas);
     }
 
     @Override
@@ -42,6 +46,7 @@ public class GameScreen extends BaseScreen {
         for (Star star : stars) {
             star.resize(worldBounds);
         }
+        battleShip.resize(worldBounds);
     }
 
     @Override
@@ -75,6 +80,7 @@ public class GameScreen extends BaseScreen {
         for (Star star : stars) {
             star.update(delta);
         }
+        battleShip.update(delta);
     }
 
     private void draw() {
@@ -83,6 +89,7 @@ public class GameScreen extends BaseScreen {
         for (Star star : stars) {
             star.draw(batch);
         }
+        battleShip.draw(batch);
         batch.end();
     }
 }
