@@ -10,16 +10,11 @@ import ru.geekbrains.math.Rnd;
 public class BattleShip extends Sprite {
     private final float MOTION = 0.01f;
 
-    private Vector2 v;
+    private Vector2 touch;
     private Rect worldBounds;
-
-    private float animateTimer;
-    private float animateInterval;
 
     public BattleShip(TextureAtlas atlas) {
         super(atlas.findRegion("main_ship").split(195, 287)[0][0]);
-        float vx = 0;// Rnd.nextFloat(-0.005f, 0.005f);
-        float vy = 0; //Rnd.nextFloat(-0.2f, -0.05f);
         worldBounds = new Rect();
     }
 
@@ -30,6 +25,26 @@ public class BattleShip extends Sprite {
         float posX = (worldBounds.getLeft() + worldBounds.getRight())/2;
         float posY = worldBounds.getBottom() + (worldBounds.getBottom() + worldBounds.getHeight())/5;
         pos.set(posX, posY);
+    }
+
+    @Override
+    public void update(float delta) {
+        if (this.touch != null) {
+            if (touch.x - MOTION > pos.x) {
+                pos.add( MOTION, 0);
+            }
+            else if (touch.x + MOTION < pos.x) {
+                pos.add( -MOTION, 0);
+            }
+            else {
+                pos.set(touch.x, pos.y);
+                touch = null;
+            }
+            }
+        }
+
+    public void setTouch (Vector2 touch) {
+        this.touch = touch;
     }
 
     public void setX (int coeff) {
