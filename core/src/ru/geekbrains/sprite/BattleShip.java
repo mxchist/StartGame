@@ -17,7 +17,7 @@ public class BattleShip extends Sprite {
     private float animateInterval;
 
     public BattleShip(TextureAtlas atlas) {
-        super(atlas.findRegion("main_ship");
+        super(atlas.findRegion("main_ship").split(195, 287)[0][0]);
         float vx = 0;// Rnd.nextFloat(-0.005f, 0.005f);
         float vy = 0; //Rnd.nextFloat(-0.2f, -0.05f);
         worldBounds = new Rect();
