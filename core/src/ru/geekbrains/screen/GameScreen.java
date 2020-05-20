@@ -12,13 +12,15 @@ import ru.geekbrains.sprite.Star;
 import ru.geekbrains.sprite.BattleShip;
 
 public class GameScreen extends BaseScreen {
+    private final int LEFT_COEFF = -1;
+    private final int RIGHT_COEFF = 1;
 
     private Texture bg;
     private Background background;
     private TextureAtlas atlas, mainAtlas;
     private Star[] stars;
     private BattleShip battleShip;
-    private int keyCode;
+    private int coeff;
 
     @Override
     public void show() {
@@ -36,9 +38,7 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void render(float delta) {
-        if (keyCode != 0) {
-            battleShip.setX(keyCode);
-        }
+        battleShip.setX(coeff);
         super.render(delta);
         update(delta);
         draw();
@@ -62,13 +62,27 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public boolean keyDown(int keycode) {
-        this.keyCode = keycode;
+        switch (keycode) {
+            case 21:
+                this.coeff += LEFT_COEFF;
+                break;
+            case 22:
+                this.coeff += RIGHT_COEFF;
+                break;
+        }
         return super.keyDown(keycode);
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        this.keyCode = 0;
+        switch (keycode) {
+            case 21:
+                this.coeff -= LEFT_COEFF;
+                break;
+            case 22:
+                this.coeff -= RIGHT_COEFF;
+                break;
+        }
         return super.keyUp(keycode);
     }
 

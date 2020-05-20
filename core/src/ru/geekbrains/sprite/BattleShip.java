@@ -17,11 +17,9 @@ public class BattleShip extends Sprite {
     private float animateInterval;
 
     public BattleShip(TextureAtlas atlas) {
-        super(atlas.findRegion("main_ship"));
-        v = new Vector2();
+        super(atlas.findRegion("main_ship");
         float vx = 0;// Rnd.nextFloat(-0.005f, 0.005f);
         float vy = 0; //Rnd.nextFloat(-0.2f, -0.05f);
-        v.set(vx, vy);
         worldBounds = new Rect();
     }
 
@@ -34,32 +32,15 @@ public class BattleShip extends Sprite {
         pos.set(posX, posY);
     }
 
-    public void setX (int keycode) {
-        switch(keycode) {
-            case 21:
-                pos.add(-MOTION, 0);
-                break;
-            case 22:
-                pos.add( MOTION, 0);
-            delault: pos.add(0, 0);
-        };
+    public void setX (int coeff) {
+            pos.add(coeff * MOTION, 0);
 
-    }
-
-    @Override
-    public void update(float delta) {
-        checkBounds();
-    }
-
-    private void checkBounds() {
-        if (getRight() < worldBounds.getLeft()) {
-            setLeft(worldBounds.getRight());
+        if (getRight() >= worldBounds.getRight()) {
+            pos.add(- coeff * MOTION, 0);
         }
-        if (getLeft() > worldBounds.getRight()) {
-            setRight(worldBounds.getLeft());
-        }
-        if (getTop() < worldBounds.getBottom()) {
-            setBottom(worldBounds.getTop());
+        else if (getLeft() <= worldBounds.getLeft()) {
+            pos.add(- coeff * MOTION, 0);
         }
     }
+
 }
