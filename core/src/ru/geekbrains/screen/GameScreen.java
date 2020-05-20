@@ -57,6 +57,7 @@ public class GameScreen extends BaseScreen {
     public void dispose() {
         bg.dispose();
         atlas.dispose();
+        mainAtlas.dispose();
         super.dispose();
     }
 
