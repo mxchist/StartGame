@@ -8,6 +8,7 @@ import ru.geekbrains.math.Rect;
 import ru.geekbrains.math.Rnd;
 
 public class BattleShip extends Sprite {
+    private final float MOTION = 0.01f;
 
     private Vector2 v;
     private Rect worldBounds;
@@ -31,18 +32,22 @@ public class BattleShip extends Sprite {
         float posX = (worldBounds.getLeft() + worldBounds.getRight())/2;
         float posY = worldBounds.getBottom() + (worldBounds.getBottom() + worldBounds.getHeight())/5;
         pos.set(posX, posY);
-        animateInterval = Rnd.nextFloat(0.5f, 1.5f);
+    }
+
+    public void setX (int keycode) {
+        switch(keycode) {
+            case 21:
+                pos.add(-MOTION, 0);
+                break;
+            case 22:
+                pos.add( MOTION, 0);
+            delault: pos.add(0, 0);
+        };
+
     }
 
     @Override
     public void update(float delta) {
-//        setScale(getScale() - 0.008f);
-//        animateTimer += delta;
-//        if (animateTimer >= animateInterval) {
-//            setScale(1f);
-            animateTimer = 0f;
-//        }
-//        pos.mulAdd(v, delta);
         checkBounds();
     }
 

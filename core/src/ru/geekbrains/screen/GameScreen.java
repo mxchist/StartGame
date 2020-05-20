@@ -18,6 +18,7 @@ public class GameScreen extends BaseScreen {
     private TextureAtlas atlas, mainAtlas;
     private Star[] stars;
     private BattleShip battleShip;
+    private int keyCode;
 
     @Override
     public void show() {
@@ -35,6 +36,9 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void render(float delta) {
+        if (keyCode != 0) {
+            battleShip.setX(keyCode);
+        }
         super.render(delta);
         update(delta);
         draw();
@@ -58,11 +62,13 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public boolean keyDown(int keycode) {
+        this.keyCode = keycode;
         return super.keyDown(keycode);
     }
 
     @Override
     public boolean keyUp(int keycode) {
+        this.keyCode = 0;
         return super.keyUp(keycode);
     }
 

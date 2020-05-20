@@ -87,6 +87,7 @@ public class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
+
         return false;
     }
 
