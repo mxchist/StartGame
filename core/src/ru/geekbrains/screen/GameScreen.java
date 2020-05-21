@@ -22,7 +22,6 @@ public class GameScreen extends BaseScreen {
     private Star[] stars;
     private BattleShip battleShip;
     private int coeff;
-    private BattleShip mainShip;
     private BulletPool bulletPool;
 
     @Override
@@ -37,7 +36,7 @@ public class GameScreen extends BaseScreen {
             stars[i] = new Star(atlas);
         }
         bulletPool = new BulletPool();
-        mainShip = new BattleShip(atlas, bulletPool);
+        battleShip = new BattleShip(mainAtlas, bulletPool);
     }
 
     @Override
