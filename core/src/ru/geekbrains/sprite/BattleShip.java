@@ -1,21 +1,32 @@
 package ru.geekbrains.sprite;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.math.Rnd;
+import ru.geekbrains.pool.BulletPool;
 
 public class BattleShip extends Sprite {
     private final float MOTION = 0.01f;
+    private final float SHOOT_INTERVAL = 1f;
 
     private Vector2 touch;
     private Rect worldBounds;
 
-    public BattleShip(TextureAtlas atlas) {
+    private BulletPool bulletPool;
+    private TextureRegion bulletRegion;
+    private Vector2 bulletV;
+    private float shootTimer;
+
+    public BattleShip(TextureAtlas atlas, BulletPool bulletPool) {
         super(atlas.findRegion("main_ship").split(195, 287)[0][0]);
         worldBounds = new Rect();
+        this.bulletPool = bulletPool;
+        bulletRegion = atlas.findRegion("bulletMainShip");
+        bulletV = new Vector2(0, 0.5f);
     }
 
     @Override
@@ -41,7 +52,12 @@ public class BattleShip extends Sprite {
                 touch = null;
             }
             }
+        shootTimer += delta;
+        if (shootTimer > SHOOT_INTERVAL) {
+            shoot();
+            shootTimer = 0;
         }
+    }
 
     public void setTouch (Vector2 touch) {
         this.touch = touch;
@@ -57,5 +73,11 @@ public class BattleShip extends Sprite {
             pos.add(- coeff * MOTION, 0);
         }
     }
+
+    private void shoot() {
+        Bullet bullet = bulletPool.obtain();
+        bullet.set(this, bulletRegion, pos, bulletV, 0.01f, worldBounds, 1);
+    }
+
 
 }
