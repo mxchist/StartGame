@@ -8,7 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.pool.BulletPool;
+import ru.geekbrains.pool.EnemyShipPool;
 import ru.geekbrains.sprite.Background;
+import ru.geekbrains.sprite.EnemyShip;
 import ru.geekbrains.sprite.Star;
 import ru.geekbrains.sprite.BattleShip;
 
@@ -23,6 +25,8 @@ public class GameScreen extends BaseScreen {
     private BattleShip battleShip;
     private int coeff;
     private BulletPool bulletPool;
+    private EnemyShipPool enemyShipPool;
+    private EnemyShip enemyShip;
 
     @Override
     public void show() {
@@ -36,7 +40,9 @@ public class GameScreen extends BaseScreen {
             stars[i] = new Star(atlas);
         }
         bulletPool = new BulletPool();
+        enemyShipPool = new EnemyShipPool();
         battleShip = new BattleShip(mainAtlas, bulletPool);
+        this.enemyShip = new EnemyShip(mainAtlas, new BulletPool());
     }
 
     @Override
@@ -54,6 +60,7 @@ public class GameScreen extends BaseScreen {
             star.resize(worldBounds);
         }
         battleShip.resize(worldBounds);
+        enemyShip.resize(worldBounds);
     }
 
     @Override
@@ -108,6 +115,7 @@ public class GameScreen extends BaseScreen {
         }
         battleShip.update(delta);
         bulletPool.updateActiveSprites(delta);
+        enemyShip.update(delta);
     }
 
     private void free() {
@@ -122,6 +130,7 @@ public class GameScreen extends BaseScreen {
         }
         battleShip.draw(batch);
         bulletPool.drawActiveSprites(batch);
+        enemyShip.draw(batch);
         batch.end();
     }
 }
