@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.math.Rect;
+import ru.geekbrains.pool.BulletPool;
 import ru.geekbrains.sprite.Background;
 import ru.geekbrains.sprite.Star;
 import ru.geekbrains.sprite.BattleShip;
@@ -21,6 +22,8 @@ public class GameScreen extends BaseScreen {
     private Star[] stars;
     private BattleShip battleShip;
     private int coeff;
+    private BattleShip mainShip;
+    private BulletPool bulletPool;
 
     @Override
     public void show() {
@@ -33,7 +36,8 @@ public class GameScreen extends BaseScreen {
         for (int i = 0; i < stars.length; i++) {
             stars[i] = new Star(atlas);
         }
-        battleShip = new BattleShip(mainAtlas);
+        bulletPool = new BulletPool();
+        mainShip = new BattleShip(atlas, bulletPool);
     }
 
     @Override
@@ -58,6 +62,7 @@ public class GameScreen extends BaseScreen {
         bg.dispose();
         atlas.dispose();
         mainAtlas.dispose();
+        bulletPool.dispose();
         super.dispose();
     }
 
@@ -103,6 +108,11 @@ public class GameScreen extends BaseScreen {
             star.update(delta);
         }
         battleShip.update(delta);
+        bulletPool.updateActiveSprites(delta);
+    }
+
+    private void free() {
+        bulletPool.freeAllDestroyed();
     }
 
     private void draw() {
@@ -112,6 +122,7 @@ public class GameScreen extends BaseScreen {
             star.draw(batch);
         }
         battleShip.draw(batch);
+        bulletPool.drawActiveSprites(batch);
         batch.end();
     }
 }
