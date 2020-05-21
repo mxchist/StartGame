@@ -1,12 +1,13 @@
 package ru.geekbrains.sprite;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
-import ru.geekbrains.math.Rnd;
+import com.badlogic.gdx.audio.Sound;
 import ru.geekbrains.pool.BulletPool;
 
 public class BattleShip extends Sprite {
@@ -20,6 +21,7 @@ public class BattleShip extends Sprite {
     private TextureRegion bulletRegion;
     private Vector2 bulletV;
     private float shootTimer;
+    Sound sound ;
 
     public BattleShip(TextureAtlas atlas, BulletPool bulletPool) {
         super(atlas.findRegion("main_ship").split(195, 287)[0][0]);
@@ -27,6 +29,7 @@ public class BattleShip extends Sprite {
         this.bulletPool = bulletPool;
         this.bulletRegion = atlas.findRegion("bulletMainShip");
         this.bulletV = new Vector2(0, 0.5f);
+        sound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
     }
 
     @Override
@@ -77,6 +80,7 @@ public class BattleShip extends Sprite {
     private void shoot() {
         Bullet bullet = bulletPool.obtain();
         bullet.set(this, bulletRegion, pos, bulletV, 0.01f, worldBounds, 1);
+        sound.play();
     }
 
 
