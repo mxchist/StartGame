@@ -11,7 +11,7 @@ import ru.geekbrains.pool.BulletPool;
 
 public class BattleShip extends Sprite {
     private final float MOTION = 0.01f;
-    private final float SHOOT_INTERVAL = 1f;
+    private final float SHOOT_INTERVAL = 0.2f;
 
     private Vector2 touch;
     private Rect worldBounds;
@@ -23,10 +23,10 @@ public class BattleShip extends Sprite {
 
     public BattleShip(TextureAtlas atlas, BulletPool bulletPool) {
         super(atlas.findRegion("main_ship").split(195, 287)[0][0]);
-        worldBounds = new Rect();
+        this.worldBounds = new Rect();
         this.bulletPool = bulletPool;
-        bulletRegion = atlas.findRegion("bulletMainShip");
-        bulletV = new Vector2(0, 0.5f);
+        this.bulletRegion = atlas.findRegion("bulletMainShip");
+        this.bulletV = new Vector2(0, 0.5f);
     }
 
     @Override
