@@ -66,6 +66,10 @@ public class BattleShip extends Sprite {
         this.touch = touch;
     }
 
+    public void dispose() {
+        sound.dispose();
+    }
+
     public void setX (int coeff) {
             pos.add(coeff * MOTION, 0);
 
