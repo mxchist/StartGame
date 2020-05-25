@@ -14,10 +14,14 @@ public class BattleShip extends Ship {
     private final float SHOOT_INTERVAL = 0.2f;
 
     private Vector2 touch;
-    private float bulletHeight;
-    private int damage;
+    private static final float SIZE = 0.15f;
+    private static final float MARGIN = 0.05f;
+    private static final int INVALID_POINTER = -1;
+    private static final int HP = 100;
 
-    public MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool) {
+    private int leftPointer, rightPointer;
+
+    public BattleShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool) {
         super(atlas.findRegion("main_ship"), 1, 2, 2);
         this.bulletPool = bulletPool;
         this.explosionPool = explosionPool;

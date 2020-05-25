@@ -8,9 +8,12 @@ import com.badlogic.gdx.math.Vector2;
 import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.pool.BulletPool;
+import ru.geekbrains.pool.EnemyPool;
+import ru.geekbrains.pool.ExplosionPool;
 import ru.geekbrains.sprite.Background;
 import ru.geekbrains.sprite.Star;
 import ru.geekbrains.sprite.BattleShip;
+import ru.geekbrains.utils.EnemyEmitter;
 
 public class GameScreen extends BaseScreen {
     private final int LEFT_COEFF = -1;
@@ -24,6 +27,10 @@ public class GameScreen extends BaseScreen {
     private int coeff;
     private BulletPool bulletPool;
 
+    private EnemyPool enemyPool;
+    private ExplosionPool explosionPool;
+    private EnemyEmitter enemyEmitter;
+
     @Override
     public void show() {
         super.show();
@@ -36,7 +43,9 @@ public class GameScreen extends BaseScreen {
             stars[i] = new Star(atlas);
         }
         bulletPool = new BulletPool();
-        battleShip = new BattleShip(mainAtlas, bulletPool);
+        explosionPool = new ExplosionPool(atlas);
+        enemyPool = new EnemyPool(bulletPool, explosionPool, worldBounds);
+        battleShip = new BattleShip(atlas, bulletPool, explosionPool);
     }
 
     @Override
