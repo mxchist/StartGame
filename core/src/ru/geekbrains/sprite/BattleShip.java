@@ -7,18 +7,30 @@ import com.badlogic.gdx.math.Vector2;
 import ru.geekbrains.base.Ship;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.pool.BulletPool;
+import ru.geekbrains.pool.ExplosionPool;
 
 public class BattleShip extends Ship {
     private final float MOTION = 0.01f;
     private final float SHOOT_INTERVAL = 0.2f;
 
     private Vector2 touch;
+    private float bulletHeight;
+    private int damage;
 
-    public BattleShip(TextureAtlas atlas, BulletPool bulletPool) {
-        super(atlas.findRegion("main_ship").split(195, 287)[0][0]);
+    public MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool) {
+        super(atlas.findRegion("main_ship"), 1, 2, 2);
         this.bulletPool = bulletPool;
-        this.bulletRegion = atlas.findRegion("bulletMainShip");
+        this.explosionPool = explosionPool;
+        bulletRegion = atlas.findRegion("bulletMainShip");
         bulletV = new Vector2(0, 0.5f);
+        bulletHeight = 0.01f;
+        damage = 1;
+        v0.set(0.5f, 0);
+        leftPointer = INVALID_POINTER;
+        rightPointer = INVALID_POINTER;
+        reloadInterval = 0.25f;
+        reloadTimer = reloadInterval;
+        hp = HP;
         sound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
     }
 
