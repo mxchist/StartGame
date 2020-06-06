@@ -18,7 +18,7 @@ public class EnemyPool extends SpritesPool<Enemy> {
         this.bulletPool = bulletPool;
         this.explosionPool = explosionPool;
         this.worldBounds = worldBounds;
-        sound = Gdx.audio.newSound(Gdx.files.internal("sounds/bullet.wav"));
+        this.sound = Gdx.audio.newSound(Gdx.files.internal("sounds/bullet.wav"));
     }
 
     @Override

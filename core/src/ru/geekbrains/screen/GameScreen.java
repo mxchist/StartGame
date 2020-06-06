@@ -43,9 +43,10 @@ public class GameScreen extends BaseScreen {
             stars[i] = new Star(atlas);
         }
         bulletPool = new BulletPool();
-        explosionPool = new ExplosionPool(atlas);
+        explosionPool = new ExplosionPool(mainAtlas);
         enemyPool = new EnemyPool(bulletPool, explosionPool, worldBounds);
-        battleShip = new BattleShip(atlas, bulletPool, explosionPool);
+        battleShip = new BattleShip(mainAtlas, bulletPool, explosionPool);
+        enemyEmitter = new EnemyEmitter(mainAtlas, enemyPool);
     }
 
     @Override
@@ -53,6 +54,7 @@ public class GameScreen extends BaseScreen {
         battleShip.setX(coeff);
         super.render(delta);
         update(delta);
+        free();
         draw();
     }
 
@@ -63,6 +65,7 @@ public class GameScreen extends BaseScreen {
             star.resize(worldBounds);
         }
         battleShip.resize(worldBounds);
+        enemyEmitter.resize(worldBounds);
     }
 
     @Override
@@ -118,10 +121,14 @@ public class GameScreen extends BaseScreen {
         }
         battleShip.update(delta);
         bulletPool.updateActiveSprites(delta);
+        enemyPool.updateActiveSprites(delta);
+        enemyEmitter.generate(delta);
     }
 
     private void free() {
         bulletPool.freeAllDestroyed();
+        enemyPool.freeAllDestroyed();
+        explosionPool.freeAllDestroyed();
     }
 
     private void draw() {
@@ -132,6 +139,7 @@ public class GameScreen extends BaseScreen {
         }
         battleShip.draw(batch);
         bulletPool.drawActiveSprites(batch);
+        enemyPool.drawActiveSprites(batch);
         batch.end();
     }
 }

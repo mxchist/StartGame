@@ -35,7 +35,7 @@ public class BattleShip extends Ship {
         reloadInterval = 0.25f;
         reloadTimer = reloadInterval;
         hp = HP;
-        sound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
+        this.sound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
     }
 
     @Override

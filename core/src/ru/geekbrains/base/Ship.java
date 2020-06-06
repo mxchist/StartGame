@@ -44,8 +44,8 @@ public class Ship extends Sprite {
 
     public Ship(TextureRegion region, int rows, int cols, int frames) {
         super(region, rows, cols, frames);
-        v0 = new Vector2();
-        v = new Vector2();
+        this.v0 = new Vector2();
+        this.v = new Vector2();
     }
 
     public Ship(BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds, Sound sound) {
@@ -55,23 +55,36 @@ public class Ship extends Sprite {
         this.sound = sound;
         this.v0 = new Vector2();
         this.v = new Vector2();
-        bulletV = new Vector2();
+        this.bulletV = new Vector2();
     }
 
     @Override
     public void resize(Rect worldBounds) {
+        super.resize(worldBounds);
         this.worldBounds = worldBounds;
     }
 
     protected void shoot() {
         Bullet bullet = bulletPool.obtain();
         bullet.set(this, bulletRegion, pos, bulletV, 0.01f, worldBounds, 1);
-        sound.play();
+        this.sound.play(0.2f);
+    }
+
+    @Override
+    public void update(float delta) {
+        super.update(delta);
+        pos.mulAdd(v, delta);
+        reloadTimer += delta;
+        if (reloadTimer >= reloadInterval) {
+            shoot();
+            reloadTimer = 0f;
+        }
     }
 
     @Override
     public void destroy () {
         super.destroy();
+        boom();
     }
 
     private void boom() {
