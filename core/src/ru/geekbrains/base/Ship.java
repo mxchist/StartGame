@@ -12,7 +12,7 @@ import ru.geekbrains.pool.ExplosionPool;
 import ru.geekbrains.sprite.Bullet;
 
 public class Ship extends Sprite {
-    protected final Vector2 v0;
+    protected Vector2 v0;
     protected final Vector2 v;
 
     protected Rect worldBounds;

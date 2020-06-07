@@ -76,7 +76,6 @@ public class EnemyEmitter {
             if (type < 0.5f) {
                 enemy.set(
                         enemySmallRegions,
-                        enemySmallV,
                         bulletRegion,
                         ENEMY_SMALL_BULLET_HEIGHT,
                         ENEMY_SMALL_BULLET_VY,
