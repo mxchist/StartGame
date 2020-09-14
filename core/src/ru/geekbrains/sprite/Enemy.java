@@ -8,15 +8,18 @@ import ru.geekbrains.base.Ship;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.pool.BulletPool;
 import ru.geekbrains.pool.ExplosionPool;
+import ru.geekbrains.utils.EnemyEmitter;
 
 public class Enemy extends Ship {
 
-    private final Vector2 v0 = new Vector2(0, -0.2f);
+    protected final Vector2 v0 = new Vector2(0, -0.2f);
     private Vector2 vCur;
+    private boolean isRevealed;
 
     public Enemy(BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds, Sound sound) {
         super(bulletPool, explosionPool, worldBounds, sound);
         vCur = new Vector2();
+        isRevealed = false;
     }
 
     @Override
@@ -24,7 +27,9 @@ public class Enemy extends Ship {
         super.update(delta);
         if (getBottom() <= worldBounds.getBottom()) {
             destroy();
+            isRevealed = false;
         }
+        else
         checkPosition();
     }
 
@@ -47,7 +52,7 @@ public class Enemy extends Ship {
         this.reloadTimer = reloadInterval;
         this.hp = hp;
         setHeightProportion(height);
-        this.vCur = v0;
+        this.v.set(v0);
     }
 
     public void set(
@@ -66,10 +71,16 @@ public class Enemy extends Ship {
     }
 
     protected void checkPosition () {
-        if (getTop() > worldBounds.getTop())
-            this.v.set(v0);
-        else
-            this.v.set(vCur);
+        if (isRevealed == false) {
+            if (getTop() > worldBounds.getTop()) {
+                this.v.set(v0);
+            }
+            else {
+                if (this.hp == EnemyEmitter.ENEMY_BIG_HP || this.hp == EnemyEmitter.ENEMY_MEDIUM_HP)
+                    this.v.set(vCur);
+                isRevealed = true;
+            }
+        }
     }
 
 }

@@ -12,7 +12,6 @@ import ru.geekbrains.pool.ExplosionPool;
 import ru.geekbrains.sprite.Bullet;
 
 public class Ship extends Sprite {
-    protected Vector2 v0;
     protected final Vector2 v;
 
     protected Rect worldBounds;
@@ -30,10 +29,10 @@ public class Ship extends Sprite {
     protected float reloadInterval;
     protected float reloadTimer;
     protected int hp;
+    protected Vector2 v0 = new Vector2(0, -0.2f);
 
     public Ship() {
         this.worldBounds = new Rect();
-        v0 = new Vector2();
         v = new Vector2();
     }
 
@@ -44,7 +43,6 @@ public class Ship extends Sprite {
 
     public Ship(TextureRegion region, int rows, int cols, int frames) {
         super(region, rows, cols, frames);
-        this.v0 = new Vector2();
         this.v = new Vector2();
     }
 
@@ -53,7 +51,6 @@ public class Ship extends Sprite {
         this.explosionPool = explosionPool;
         this.worldBounds = worldBounds;
         this.sound = sound;
-        this.v0 = new Vector2();
         this.v = new Vector2();
         this.bulletV = new Vector2();
     }

@@ -29,7 +29,6 @@ public class BattleShip extends Ship {
         bulletV = new Vector2(0, 0.5f);
         bulletHeight = 0.01f;
         damage = 1;
-        v0.set(0.5f, 0);
         leftPointer = INVALID_POINTER;
         rightPointer = INVALID_POINTER;
         reloadInterval = 0.25f;
