@@ -122,6 +122,7 @@ public class GameScreen extends BaseScreen {
         battleShip.update(delta);
         bulletPool.updateActiveSprites(delta);
         enemyPool.updateActiveSprites(delta);
+        explosionPool.updateActiveSprites(delta);
         enemyEmitter.generate(delta);
     }
 
@@ -140,6 +141,7 @@ public class GameScreen extends BaseScreen {
         battleShip.draw(batch);
         bulletPool.drawActiveSprites(batch);
         enemyPool.drawActiveSprites(batch);
+        explosionPool.drawActiveSprites(batch);
         batch.end();
     }
 }
