@@ -49,7 +49,7 @@ public class Enemy extends Ship {
         this.bulletV.set(0, bulletVY);
         this.damage = damage;
         this.reloadInterval = reloadInterval;
-        this.reloadTimer = reloadInterval;
+        this.reloadTimer = 0;
         this.hp = hp;
         setHeightProportion(height);
         this.v.set(v0);
@@ -76,6 +76,7 @@ public class Enemy extends Ship {
                 this.v.set(v0);
             }
             else {
+                shoot();
                 if (this.hp == EnemyEmitter.ENEMY_BIG_HP || this.hp == EnemyEmitter.ENEMY_MEDIUM_HP)
                     this.v.set(vCur);
                 isRevealed = true;
