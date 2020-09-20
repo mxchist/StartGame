@@ -11,6 +11,8 @@ import ru.geekbrains.pool.BulletPool;
 import ru.geekbrains.pool.EnemyPool;
 import ru.geekbrains.pool.ExplosionPool;
 import ru.geekbrains.sprite.Background;
+import ru.geekbrains.sprite.Bullet;
+import ru.geekbrains.sprite.Enemy;
 import ru.geekbrains.sprite.Star;
 import ru.geekbrains.sprite.BattleShip;
 import ru.geekbrains.utils.EnemyEmitter;
@@ -116,6 +118,7 @@ public class GameScreen extends BaseScreen {
     }
 
     private void update(float delta) {
+        checkDamage();
         for (Star star : stars) {
             star.update(delta);
         }
@@ -144,4 +147,16 @@ public class GameScreen extends BaseScreen {
         explosionPool.drawActiveSprites(batch);
         batch.end();
     }
+
+    private void checkDamage () {
+        for (Bullet bullet : battleShip.getActiveBullets()) {
+            for (Enemy enemy : enemyEmitter.getEnemyPool()) {
+                if (enemy.isOverlapedBy(bullet)) {
+                    enemy.setDamage(bullet);
+                    bullet.destroy();
+                }
+            }
+        }
+    }
+
 }

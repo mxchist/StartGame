@@ -10,6 +10,7 @@ import ru.geekbrains.pool.BulletPool;
 import ru.geekbrains.sprite.Explosion;
 import ru.geekbrains.pool.ExplosionPool;
 import ru.geekbrains.sprite.Bullet;
+import java.util.List;
 
 public class Ship extends Sprite {
     protected final Vector2 v;
@@ -87,6 +88,30 @@ public class Ship extends Sprite {
     private void boom() {
         Explosion explosion = explosionPool.obtain();
         explosion.set(getHeight(), pos);
+    }
+
+
+    public List<Bullet> getActiveBullets() {
+        return this.bulletPool.getActiveObjects();
+    }
+
+    public boolean isOverlapedBy (Sprite other) {
+        return (
+                getLeft() >= other.getLeft() & getLeft() <= other.getRight()
+                || getRight() >= other.getLeft() & getRight()  <= other.getRight()
+
+        ) &
+                (
+                getTop() <= other.getTop() & getTop() >= other.getBottom()
+                || getBottom() <= other.getTop() & getBottom() >= other.getBottom()
+        );
+    }
+
+    public void setDamage(Bullet bullet) {
+        this.damage -= bullet.getDamage();
+        if (this.damage < 0) {
+            destroy();
+        }
     }
 
 }

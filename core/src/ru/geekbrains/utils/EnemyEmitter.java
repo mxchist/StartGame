@@ -8,6 +8,7 @@ import ru.geekbrains.math.Rect;
 import ru.geekbrains.math.Rnd;
 import ru.geekbrains.pool.EnemyPool;
 import ru.geekbrains.sprite.Enemy;
+import java.util.List;
 
 public class EnemyEmitter {
 
@@ -112,5 +113,9 @@ public class EnemyEmitter {
             enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(), worldBounds.getRight() - enemy.getHalfWidth());
             enemy.setBottom(worldBounds.getTop());
         }
+    }
+
+    public List<Enemy> getEnemyPool () {
+        return this.enemyPool.getActiveObjects();
     }
 }
