@@ -11,7 +11,7 @@ import ru.geekbrains.pool.ExplosionPool;
 
 public class BattleShip extends Ship {
     private final float MOTION = 0.01f;
-    private final float SHOOT_INTERVAL = 0.2f;
+    private final float SHOOT_INTERVAL = 0.6f;
 
     private Vector2 touch;
     private static final float SIZE = 0.15f;
@@ -31,8 +31,6 @@ public class BattleShip extends Ship {
         damage = 1;
         leftPointer = INVALID_POINTER;
         rightPointer = INVALID_POINTER;
-        reloadInterval = 0.25f;
-        reloadTimer = reloadInterval;
         hp = HP;
         this.sound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
     }

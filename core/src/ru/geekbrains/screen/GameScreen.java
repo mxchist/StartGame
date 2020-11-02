@@ -16,6 +16,7 @@ import ru.geekbrains.sprite.Enemy;
 import ru.geekbrains.sprite.Star;
 import ru.geekbrains.sprite.BattleShip;
 import ru.geekbrains.utils.EnemyEmitter;
+import java.util.List;
 
 public class GameScreen extends BaseScreen {
     private final int LEFT_COEFF = -1;
@@ -127,6 +128,7 @@ public class GameScreen extends BaseScreen {
         enemyPool.updateActiveSprites(delta);
         explosionPool.updateActiveSprites(delta);
         enemyEmitter.generate(delta);
+        checkCollision();
     }
 
     private void free() {
@@ -151,10 +153,22 @@ public class GameScreen extends BaseScreen {
     private void checkDamage () {
         for (Bullet bullet : battleShip.getActiveBullets()) {
             for (Enemy enemy : enemyEmitter.getEnemyPool()) {
-                if (enemy.isOverlapedBy(bullet)) {
+                if (bullet.getOwner() != enemy & enemy.isOverlaped(bullet)) {
                     enemy.setDamage(bullet);
+//                    View destroying bullet properties
+//                    System.out.printf("%10s: %10d, x: %10f %n", "Bullet is", bullet.hashCode(), bullet.getLeft());
                     bullet.destroy();
                 }
+            }
+        }
+    }
+
+    private void checkCollision() {
+        List<Enemy> enemyList = enemyPool.getActiveObjects();
+        for (Enemy enemy : enemyList) {
+            if (!battleShip.isOverlaped(enemy)) {
+//                enemy.destroy();
+                continue;
             }
         }
     }
