@@ -20,7 +20,7 @@ public class Ship extends Sprite {
     protected Vector2 bulletV;
     protected float bulletHeight;
     protected int damage;
-
+    protected int colorResetCounter;
 
     protected TextureRegion bulletRegion;
     protected ExplosionPool explosionPool;
@@ -77,6 +77,8 @@ public class Ship extends Sprite {
             shoot();
             reloadTimer = 0f;
         }
+        if (colorResetCounter > 0)
+            this.frame = --colorResetCounter == 0 ? 0 : 1;
     }
 
     @Override
@@ -95,19 +97,20 @@ public class Ship extends Sprite {
         return this.bulletPool.getActiveObjects();
     }
 
-    public boolean isOverlapedBy (Sprite other) {
+    public boolean isOverlaped (Sprite other) {
         return (
-                getLeft() >= other.getLeft() & getLeft() <= other.getRight()
-                || getRight() >= other.getLeft() & getRight()  <= other.getRight()
+                other.getLeft() >= getLeft() & other.getLeft() <= getRight()
+                || other.getLeft() >= getRight() &  other.getRight() <= getRight()
 
         ) &
                 (
-                getTop() <= other.getTop() & getTop() >= other.getBottom()
-                || getBottom() <= other.getTop() & getBottom() >= other.getBottom()
+                        other.getTop() <= getTop() & other.getTop() >= getBottom()
+                || other.getBottom() <= getTop() & other.getBottom() >= getBottom()
         );
     }
 
     public void setDamage(Bullet bullet) {
+        this.colorResetCounter = 3;
         this.damage -= bullet.getDamage();
         if (this.damage < 0) {
             destroy();
