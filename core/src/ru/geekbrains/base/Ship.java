@@ -64,7 +64,7 @@ public class Ship extends Sprite {
 
     protected void shoot() {
         Bullet bullet = bulletPool.obtain();
-        bullet.set(this, bulletRegion, pos, bulletV, 0.01f, worldBounds, 1);
+        bullet.set(this, bulletRegion, pos, bulletV, bulletHeight, worldBounds, 1);
         this.sound.play(0.2f);
     }
 
