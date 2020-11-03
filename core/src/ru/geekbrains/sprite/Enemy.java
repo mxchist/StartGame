@@ -27,7 +27,6 @@ public class Enemy extends Ship {
         super.update(delta);
         if (getBottom() <= worldBounds.getBottom()) {
             destroy();
-            isRevealed = false;
         }
         else
         checkPosition();
@@ -53,6 +52,8 @@ public class Enemy extends Ship {
         this.hp = hp;
         setHeightProportion(height);
         this.v.set(v0);
+
+        isRevealed = false;
     }
 
     public void set(
