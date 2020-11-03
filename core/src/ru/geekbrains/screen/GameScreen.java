@@ -151,7 +151,7 @@ public class GameScreen extends BaseScreen {
     }
 
     private void checkDamage () {
-        for (Bullet bullet : battleShip.getActiveBullets()) {
+        for (Bullet bullet : bulletPool.getActiveObjects()) {
             for (Enemy enemy : enemyEmitter.getEnemyPool()) {
                 if (bullet.getOwner() != enemy & enemy.isOverlaped(bullet)) {
                     enemy.setDamage(bullet);

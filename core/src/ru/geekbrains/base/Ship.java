@@ -92,11 +92,6 @@ public class Ship extends Sprite {
         explosion.set(getHeight(), pos);
     }
 
-
-    public List<Bullet> getActiveBullets() {
-        return this.bulletPool.getActiveObjects();
-    }
-
     public boolean isOverlaped (Sprite other) {
         return (
                 other.getLeft() >= getLeft() & other.getLeft() <= getRight()
