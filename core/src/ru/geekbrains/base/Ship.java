@@ -30,6 +30,7 @@ public class Ship extends Sprite {
     protected float reloadInterval;
     protected float reloadTimer;
     protected int hp;
+    protected int originalHp;
     protected Vector2 v0 = new Vector2(0, -0.2f);
 
     public Ship() {
@@ -107,9 +108,22 @@ public class Ship extends Sprite {
     public void setDamage(Bullet bullet) {
         this.colorResetCounter = 3;
         this.hp -= bullet.getDamage();
-        if (this.hp < 0) {
+        if (this.hp <= 0) {
             destroy();
         }
     }
 
+    public void setDamage(Ship ship) {
+        this.colorResetCounter = 3;
+        this.hp -= ship.getOriginalHp();
+//        System.out.printf("My name: %10s, my hp: %5d, my original hp: %3d %n", getClass().getName(), this.hp, this.originalHp);
+        if (this.hp <= 0) {
+            destroy();
+        }
+    }
+
+
+    public int getOriginalHp () {
+        return  this.originalHp;
+    }
 }
