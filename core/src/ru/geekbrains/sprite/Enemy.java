@@ -78,8 +78,11 @@ public class Enemy extends Ship {
             }
             else {
                 shoot();
-                if (this.hp == EnemyEmitter.ENEMY_BIG_HP || this.hp == EnemyEmitter.ENEMY_MEDIUM_HP)
+                if (this.hp == EnemyEmitter.ENEMY_BIG_HP || this.hp == EnemyEmitter.ENEMY_MEDIUM_HP) {
+                    System.out.printf("this.v: %5f, vCur: %5f %n", this.v.y, vCur.y);
                     this.v.set(vCur);
+                    System.out.printf("this.v: %5f %n", this.v.y);
+                }
                 isRevealed = true;
             }
         }
