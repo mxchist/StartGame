@@ -106,8 +106,8 @@ public class Ship extends Sprite {
 
     public void setDamage(Bullet bullet) {
         this.colorResetCounter = 3;
-        this.damage -= bullet.getDamage();
-        if (this.damage < 0) {
+        this.hp -= bullet.getDamage();
+        if (this.hp < 0) {
             destroy();
         }
     }
