@@ -160,15 +160,22 @@ public class GameScreen extends BaseScreen {
                     bullet.destroy();
                 }
             }
+            if (bullet.getOwner() != battleShip & battleShip.isOverlaped(bullet)) {
+                battleShip.setDamage(bullet);
+//                    View destroying bullet properties
+//                    System.out.printf("%10s: %10d, x: %10f %n", "Bullet is", bullet.hashCode(), bullet.getLeft());
+                bullet.destroy();
+            }
+
         }
     }
 
     private void checkCollision() {
         List<Enemy> enemyList = enemyPool.getActiveObjects();
         for (Enemy enemy : enemyList) {
-            if (!battleShip.isOverlaped(enemy)) {
-//                enemy.destroy();
-                continue;
+            if (battleShip.isOverlaped(enemy)) {
+                enemy.setDamage(battleShip);
+                battleShip.setDamage(enemy);
             }
         }
     }

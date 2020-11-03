@@ -19,8 +19,6 @@ public class BattleShip extends Ship {
     private static final int INVALID_POINTER = -1;
     private static final int HP = 100;
 
-    private int leftPointer, rightPointer;
-
     public BattleShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool) {
         super(atlas.findRegion("main_ship"), 1, 2, 2);
         this.bulletPool = bulletPool;
@@ -29,9 +27,7 @@ public class BattleShip extends Ship {
         bulletV = new Vector2(0, 0.5f);
         bulletHeight = 0.01f;
         damage = 1;
-        leftPointer = INVALID_POINTER;
-        rightPointer = INVALID_POINTER;
-        hp = HP;
+        hp = originalHp = HP;
         this.sound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
     }
 

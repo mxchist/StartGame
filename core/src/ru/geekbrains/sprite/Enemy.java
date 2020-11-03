@@ -49,7 +49,7 @@ public class Enemy extends Ship {
         this.damage = damage;
         this.reloadInterval = reloadInterval;
         this.reloadTimer = 0;
-        this.hp = hp;
+        this.originalHp = this.hp = hp;
         setHeightProportion(height);
         this.v.set(v0);
 
