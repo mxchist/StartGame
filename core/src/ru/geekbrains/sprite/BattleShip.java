@@ -21,6 +21,7 @@ public class BattleShip extends Ship {
 
     public BattleShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool) {
         super(atlas.findRegion("main_ship"), 1, 2, 2);
+        this.reloadInterval = SHOOT_INTERVAL;
         this.bulletPool = bulletPool;
         this.explosionPool = explosionPool;
         bulletRegion = atlas.findRegion("bulletMainShip");
@@ -42,6 +43,7 @@ public class BattleShip extends Ship {
 
     @Override
     public void update(float delta) {
+        super.update(delta);
         if (this.touch != null) {
             if (touch.x - MOTION > pos.x) {
                 pos.add( MOTION, 0);
@@ -53,11 +55,6 @@ public class BattleShip extends Ship {
                 pos.set(touch.x, pos.y);
                 touch = null;
             }
-            }
-        shootTimer += delta;
-        if (shootTimer > SHOOT_INTERVAL) {
-            shoot();
-            shootTimer = 0;
         }
     }
 
