@@ -54,6 +54,7 @@ public class Enemy extends Ship {
         this.v.set(v0);
 
         isRevealed = false;
+        System.out.printf("me: %10d, hp: %2d, v: %4.3f, vCur: %4.3f, v0: %4.3f %n", hashCode(), this.hp, this.v.y, this.vCur.y, this.v0.y);
     }
 
     public void set(
@@ -79,9 +80,7 @@ public class Enemy extends Ship {
             else {
                 shoot();
                 if (this.hp == EnemyEmitter.ENEMY_BIG_HP || this.hp == EnemyEmitter.ENEMY_MEDIUM_HP) {
-                    System.out.printf("this.v: %5f, vCur: %5f %n", this.v.y, vCur.y);
                     this.v.set(vCur);
-                    System.out.printf("this.v: %5f %n", this.v.y);
                 }
                 isRevealed = true;
             }
