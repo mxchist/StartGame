@@ -33,6 +33,8 @@ public class Ship extends Sprite {
     protected int originalHp;
     protected Vector2 v0 = new Vector2(0, -0.2f);
 
+    private final float SOUND_VOLUME = 0.1f;
+
     public Ship() {
         this.worldBounds = new Rect();
         v = new Vector2();
@@ -66,7 +68,7 @@ public class Ship extends Sprite {
     protected void shoot() {
         Bullet bullet = bulletPool.obtain();
         bullet.set(this, bulletRegion, pos, bulletV, bulletHeight, worldBounds, this.damage);
-        this.sound.play(0.2f);
+        this.sound.play(SOUND_VOLUME);
     }
 
     @Override

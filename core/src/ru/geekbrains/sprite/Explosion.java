@@ -9,6 +9,7 @@ import ru.geekbrains.base.Sprite;
 public class Explosion extends Sprite {
 
     private static final float ANIMATE_INTERVAL = 0.017f;
+    private final float SOUND_VOLUME = 0.1f;
 
     private float animateTimer;
     private Sound sound;
@@ -21,7 +22,7 @@ public class Explosion extends Sprite {
     public void set(float height, Vector2 pos) {
         setHeightProportion(height);
         this.pos.set(pos);
-        sound.play();
+        sound.play(SOUND_VOLUME);
     }
 
     @Override
