@@ -34,6 +34,9 @@ public class GameScreen extends BaseScreen {
     private ExplosionPool explosionPool;
     private EnemyEmitter enemyEmitter;
 
+    private enum State{PLAYING, GAME_OVER};
+    private State state;
+
     @Override
     public void show() {
         super.show();
@@ -50,6 +53,7 @@ public class GameScreen extends BaseScreen {
         enemyPool = new EnemyPool(bulletPool, explosionPool, worldBounds);
         battleShip = new BattleShip(mainAtlas, bulletPool, explosionPool);
         enemyEmitter = new EnemyEmitter(mainAtlas, enemyPool);
+        this.state = State.PLAYING;
     }
 
     @Override
@@ -119,16 +123,19 @@ public class GameScreen extends BaseScreen {
     }
 
     private void update(float delta) {
-        checkDamage();
+        enemyPool.updateActiveSprites(delta);
+        explosionPool.updateActiveSprites(delta);
+        bulletPool.updateActiveSprites(delta);
         for (Star star : stars) {
             star.update(delta);
         }
-        battleShip.update(delta);
-        bulletPool.updateActiveSprites(delta);
-        enemyPool.updateActiveSprites(delta);
-        explosionPool.updateActiveSprites(delta);
-        enemyEmitter.generate(delta);
-        checkCollision();
+
+        if (state == State.PLAYING) {
+            checkDamage();
+            checkCollision();
+            battleShip.update(delta);
+            enemyEmitter.generate(delta);
+        }
     }
 
     private void free() {
@@ -143,10 +150,13 @@ public class GameScreen extends BaseScreen {
         for (Star star : stars) {
             star.draw(batch);
         }
-        battleShip.draw(batch);
         bulletPool.drawActiveSprites(batch);
         enemyPool.drawActiveSprites(batch);
         explosionPool.drawActiveSprites(batch);
+
+        if (state == State.PLAYING)
+            battleShip.draw(batch);
+
         batch.end();
     }
 
@@ -165,6 +175,9 @@ public class GameScreen extends BaseScreen {
 //                    View destroying bullet properties
 //                    System.out.printf("%10s: %10d, x: %10f %n", "Bullet is", bullet.hashCode(), bullet.getLeft());
                 bullet.destroy();
+                if (battleShip.isDestroyed()) {
+                    this.state = State.GAME_OVER;
+                }
             }
 
         }
