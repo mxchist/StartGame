@@ -1,5 +1,6 @@
 package ru.geekbrains.screen;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -17,6 +18,7 @@ import ru.geekbrains.sprite.Star;
 import ru.geekbrains.sprite.BattleShip;
 import ru.geekbrains.utils.EnemyEmitter;
 import java.util.List;
+import ru.geekbrains.sprite.GameOver;
 
 public class GameScreen extends BaseScreen {
     private final int LEFT_COEFF = -1;
@@ -36,6 +38,7 @@ public class GameScreen extends BaseScreen {
 
     private enum State{PLAYING, GAME_OVER};
     private State state;
+    private GameOver gameOver;
 
     @Override
     public void show() {
@@ -54,6 +57,7 @@ public class GameScreen extends BaseScreen {
         battleShip = new BattleShip(mainAtlas, bulletPool, explosionPool);
         enemyEmitter = new EnemyEmitter(mainAtlas, enemyPool);
         this.state = State.PLAYING;
+        this.gameOver = new GameOver(mainAtlas);
     }
 
     @Override
@@ -73,6 +77,7 @@ public class GameScreen extends BaseScreen {
         }
         battleShip.resize(worldBounds);
         enemyEmitter.resize(worldBounds);
+        gameOver.resize(worldBounds);
     }
 
     @Override
@@ -150,6 +155,7 @@ public class GameScreen extends BaseScreen {
         for (Star star : stars) {
             star.draw(batch);
         }
+        gameOver.draw(batch);
         bulletPool.drawActiveSprites(batch);
         enemyPool.drawActiveSprites(batch);
         explosionPool.drawActiveSprites(batch);
