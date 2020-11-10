@@ -1,6 +1,5 @@
 package ru.geekbrains.screen;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -19,6 +18,7 @@ import ru.geekbrains.sprite.BattleShip;
 import ru.geekbrains.utils.EnemyEmitter;
 import java.util.List;
 import ru.geekbrains.sprite.GameOver;
+import ru.geekbrains.sprite.ButtonReplay;
 
 public class GameScreen extends BaseScreen {
     private final int LEFT_COEFF = -1;
@@ -39,6 +39,7 @@ public class GameScreen extends BaseScreen {
     private enum State{PLAYING, GAME_OVER};
     private State state;
     private GameOver gameOver;
+    private ButtonReplay buttonReplay;
 
     @Override
     public void show() {
@@ -77,7 +78,10 @@ public class GameScreen extends BaseScreen {
         }
         battleShip.resize(worldBounds);
         enemyEmitter.resize(worldBounds);
-        gameOver.resize(worldBounds);
+        if (state == State.GAME_OVER) {
+            gameOver.resize(worldBounds);
+            buttonReplay.resize(worldBounds);
+        }
     }
 
     @Override
@@ -119,11 +123,15 @@ public class GameScreen extends BaseScreen {
     @Override
     public boolean touchDown(Vector2 touch, int pointer, int button) {
         battleShip.setTouch(touch);
+        if (state == State.GAME_OVER)
+            buttonReplay.touchDown(touch, pointer, button);
         return super.touchDown(touch, pointer, button);
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer, int button) {
+        if (state == State.GAME_OVER)
+            buttonReplay.touchUp(touch, pointer, button);
         return super.touchUp(touch, pointer, button);
     }
 
@@ -155,13 +163,17 @@ public class GameScreen extends BaseScreen {
         for (Star star : stars) {
             star.draw(batch);
         }
-        gameOver.draw(batch);
         bulletPool.drawActiveSprites(batch);
         enemyPool.drawActiveSprites(batch);
         explosionPool.drawActiveSprites(batch);
 
-        if (state == State.PLAYING)
+        if (state == State.PLAYING) {
             battleShip.draw(batch);
+        }
+            else if (state == State.GAME_OVER) {
+            gameOver.draw(batch);
+            buttonReplay.draw(batch);
+        }
 
         batch.end();
     }
@@ -183,6 +195,9 @@ public class GameScreen extends BaseScreen {
                 bullet.destroy();
                 if (battleShip.isDestroyed()) {
                     this.state = State.GAME_OVER;
+                    buttonReplay = new ButtonReplay(mainAtlas, this);
+                    gameOver.resize(worldBounds);
+                    buttonReplay.resize(worldBounds);
                 }
             }
 
