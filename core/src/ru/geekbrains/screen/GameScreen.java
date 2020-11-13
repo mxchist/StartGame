@@ -16,6 +16,7 @@ import ru.geekbrains.sprite.Enemy;
 import ru.geekbrains.sprite.Star;
 import ru.geekbrains.sprite.BattleShip;
 import ru.geekbrains.utils.EnemyEmitter;
+
 import java.util.List;
 import ru.geekbrains.sprite.GameOver;
 import ru.geekbrains.sprite.ButtonReplay;
@@ -57,9 +58,21 @@ public class GameScreen extends BaseScreen {
         enemyPool = new EnemyPool(bulletPool, explosionPool, worldBounds);
         battleShip = new BattleShip(mainAtlas, bulletPool, explosionPool);
         enemyEmitter = new EnemyEmitter(mainAtlas, enemyPool);
-        this.state = State.PLAYING;
         this.gameOver = new GameOver(mainAtlas);
+        startNewGame();
     }
+
+
+    public void startNewGame () {
+        this.state = State.PLAYING;
+
+        enemyPool.freeAllActive();
+        explosionPool.freeAllActive();
+        bulletPool.freeAllActive();
+
+        battleShip.pos.x = 0;
+    }
+
 
     @Override
     public void render(float delta) {
@@ -122,9 +135,10 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer, int button) {
-        battleShip.setTouch(touch);
         if (state == State.GAME_OVER)
             buttonReplay.touchDown(touch, pointer, button);
+        else
+            battleShip.setTouch(touch);
         return super.touchDown(touch, pointer, button);
     }
 

@@ -29,8 +29,8 @@ public class ButtonReplay extends ScaledButton {
 
     @Override
     public void action() {
-        System.out.printf("%s %n", "Santa Blaus");
-        game.setScreen(gameScreen);
-     //   this.gameScreen.show();
+        this.gameScreen.startNewGame();
+//        game.setScreen(gameScreen);
+//        this.gameScreen.show();
     }
 }
