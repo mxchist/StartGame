@@ -12,7 +12,8 @@ import ru.geekbrains.utils.EnemyEmitter;
 
 public class Enemy extends Ship {
 
-    protected final Vector2 v0 = new Vector2(0, -0.2f);
+    protected final float v0x = 0;
+    protected final float v0y = -0.2f;
     private Vector2 vCur;
     private boolean isRevealed;
 
@@ -51,7 +52,7 @@ public class Enemy extends Ship {
         this.reloadTimer = 0;
         this.originalHp = this.hp = hp;
         setHeightProportion(height);
-        this.v.set(v0);
+        this.v.set(v0x, v0y);
 
         isRevealed = false;
         System.out.printf("me: %10d, hp: %2d, v: %4.3f, vCur: %4.3f, v0: %4.3f %n", hashCode(), this.hp, this.v.y, this.vCur.y, this.v0.y);

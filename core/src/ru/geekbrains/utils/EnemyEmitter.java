@@ -19,21 +19,21 @@ public class EnemyEmitter {
     private static final float ENEMY_SMALL_BULLET_HEIGHT = 0.01f;
     private static final float ENEMY_SMALL_BULLET_VY = -0.3f;
     private static final int ENEMY_SMALL_BULLET_DAMAGE = 1;
-    private static final float ENEMY_SMALL_RELOAD_INTERVAL = 3f;
+    private static final float ENEMY_SMALL_RELOAD_INTERVAL = 1f;
 
     private static final float ENEMY_MEDIUM_HEIGHT = 0.15f;
     public static final int ENEMY_MEDIUM_HP = 5;
     private static final float ENEMY_MEDIUM_BULLET_HEIGHT = 0.02f;
     private static final float ENEMY_MEDIUM_BULLET_VY = -0.25f;
     private static final int ENEMY_MEDIUM_BULLET_DAMAGE = 5;
-    private static final float ENEMY_MEDIUM_RELOAD_INTERVAL = 4f;
+    private static final float ENEMY_MEDIUM_RELOAD_INTERVAL = 3f;
 
     private static final float ENEMY_BIG_HEIGHT = 0.2f;
     public static final int ENEMY_BIG_HP = 10;
     private static final float ENEMY_BIG_BULLET_HEIGHT = 0.04f;
-    private static final float ENEMY_BIG_BULLET_VY = -0.3f;
+    private static final float ENEMY_BIG_BULLET_VY = -0.2f;
     private static final int ENEMY_BIG_BULLET_DAMAGE = 10;
-    private static final float ENEMY_BIG_RELOAD_INTERVAL = 1f;
+    private static final float ENEMY_BIG_RELOAD_INTERVAL = 4f;
 
     private Rect worldBounds;
     private float generateTimer;
