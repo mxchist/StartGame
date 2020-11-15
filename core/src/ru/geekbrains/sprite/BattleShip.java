@@ -76,4 +76,8 @@ public class BattleShip extends Ship {
             pos.add(- coeff * MOTION, 0);
         }
     }
+
+    public int getHp() {
+        return this.hp;
+    }
 }
